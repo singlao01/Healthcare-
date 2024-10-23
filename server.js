@@ -1,29 +1,32 @@
-// FRAMEWORKS
+// // FRAMEWORKS
 const express = require("express");
-const connectDb = require("./config/dbConnection");
-const ErrorHandler = require("./middleware/ErrorHandler");
-const cors = require("cors"); // CORS: Cross-Origin Resource Sharing allows requests from different domains 
-const connectDB = require('./db');
-
-//env config : env is locally installed 
+const connectDb = require("./Config/DBconnection");
+const ErrorHandler = require("./Middleware/ErrorHandler");
+const cors = require("cors");3
 const dotenv = require("dotenv");
 dotenv.config();
 
 connectDb(); // Connect to the database
 
 const app = express();
-const port = process.env.PORT || 5000; // Use environment port or fallback to 5000
+const port = process.env.PORT || 5500; // Changed to 3000 or another port
 
 app.use(express.json()); // Parse incoming JSON requests
 app.use(cors()); // Enable CORS
-app.use(ErrorHandler); // Custom error handler middleware
 
 // Routes
 app.get('/', (req, res) => {
     res.send("Working");
 });
 
+app.get("/Home",(req,res)=>{
+    res.render("Home",{})
+})
+
+// Custom error handler middleware
+app.use(ErrorHandler);
+
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running on https://localhost:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
 });
